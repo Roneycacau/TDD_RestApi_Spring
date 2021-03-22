@@ -6,6 +6,8 @@ import com.curso.tddrest.libraryapi.repository.BookRepository;
 import com.curso.tddrest.libraryapi.service.BookService;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository repository;
@@ -16,5 +18,10 @@ public class BookServiceImpl implements BookService {
             throw new BusinessException("ISBN já cadastrado");
         }
         return repository.save(book);
+    }
+
+    @Override
+    public Optional<Book> getById(Long id) {
+        return Optional.empty();
     }
 }

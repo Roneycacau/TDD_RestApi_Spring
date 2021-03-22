@@ -11,8 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -30,6 +32,14 @@ public class BookController {
         return mapper.map(entity, BookResponse.class);
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public BookResponse getBookDetails(@PathVariable Long id) {
+        return service.getById(id)
+                .map(book -> mapper.map(book, BookResponse.class))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrors handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -38,7 +48,7 @@ public class BookController {
 
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErrors handleBusinessExceptions(BusinessException ex){
+    public ApiErrors handleBusinessExceptions(BusinessException ex) {
         return new ApiErrors(ex);
     }
 }
