@@ -1,9 +1,9 @@
 package com.curso.tddrest.libraryapi.service;
 
-import com.curso.tddrest.libraryapi.model.dto.response.BookResponse;
 import com.curso.tddrest.libraryapi.model.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
