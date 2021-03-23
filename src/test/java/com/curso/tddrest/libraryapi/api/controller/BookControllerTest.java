@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-@WebMvcTest
+@WebMvcTest(controllers = BookController.class)
 @AutoConfigureMockMvc
 public class BookControllerTest {
 
@@ -49,7 +49,7 @@ public class BookControllerTest {
 
     @MockBean
     BookService service;
-    private Long id = 1l;
+    private final Long id = 1L;
 
     @Test
     @DisplayName("Deve criar novo livro com base no json recebido")
